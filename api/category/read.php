@@ -10,7 +10,7 @@
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate blog post object
+    // Instantiate category object
     $category = new Category($db);
 
     // Category query
