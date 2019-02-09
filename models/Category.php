@@ -53,4 +53,37 @@
             $this->created_at = $row['created_at'];
         }
 
+        // Update category
+        public function update() {
+            // Create query
+            $query = 'UPDATE ' . $this->table . '
+                SET name = :name,
+                    created_at = :created_at
+                WHERE id = :id';
+
+            // Prepare statement
+            $stmt = $this->conn->prepare($query);
+
+            // Clean data
+            $this->name = htmlspecialchars(strip_tags($this->name));
+            $this->created_at = htmlspecialchars(strip_tags($this->created_at));
+            $this->id = htmlspecialchars(strip_tags($this->id));
+
+            // Bind data
+
+            $stmt->bindParam(':name', $this->name);
+            $stmt->bindParam(':created_at', $this->created_at);
+            $stmt->bindParam(':id', $this->id);
+
+            // Run query
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                // Print error if failure
+                printf("Error: %s.\n", $stmt->error);
+                return false;
+            }
+
+        }
+
     }
