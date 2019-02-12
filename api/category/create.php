@@ -14,7 +14,7 @@
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate blog post object
+    // Instantiate category object
     $category = new Category($db);
 
     // Get raw posted data
@@ -22,7 +22,7 @@
 
     $category->name = $data->name;
 
-    // Create post
+    // Create category
     if ($category->create()) {
         echo json_encode(
             array('message' => 'Category Created')
