@@ -111,4 +111,28 @@
 
         }
 
+        // Delete Category
+        public function delete() {
+            // Create query
+            $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
+
+            // Prepare statement
+            $stmt = $this->conn->prepare($query);
+
+            // Clean and bind id
+            $this->id = htmlspecialchars(strip_tags($this->id));
+
+            $stmt->bindParam(':id', $this->id);
+
+            // Run query
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                // Print error if failure
+                printf("Error: %s.\n", $stmt->error);
+                return false;
+            }
+
+        }
+
     }
