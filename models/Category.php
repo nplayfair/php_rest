@@ -4,7 +4,7 @@
         private $conn;
         private $table = 'categories';
 
-        // Post properties
+        // Category properties
         public $id;
         public $name;
         public $created_at;
@@ -51,6 +51,34 @@
             // Set properties
             $this->name = $row['name'];
             $this->created_at = $row['created_at'];
+        }
+        // Create Category
+        public function create() {
+            // Create query
+            $query = 'INSERT INTO ' . $this->table . '
+                SET name = :name,
+                    created_at = :created_at';
+            
+            // Prepare statement
+            $stmt = $this->conn->prepare($query);
+
+            // Clean up data
+            $this->name = htmlspecialchars(strip_tags($this->name));;
+            $this->created_at = htmlspecialchars(strip_tags($this->created_at));
+
+            // Bind data
+            $stmt->bindParam(':name', $this->name);
+            $stmt->bindParam(':created_at', $this->created_at);
+
+            // Run query
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                // Print error if failure
+                printf("Error: %s.\n", $stmt->error);
+                return false;
+            }
+
         }
 
         // Update category
