@@ -56,19 +56,16 @@
         public function create() {
             // Create query
             $query = 'INSERT INTO ' . $this->table . '
-                SET name = :name,
-                    created_at = :created_at';
+                SET name = :name';
             
             // Prepare statement
             $stmt = $this->conn->prepare($query);
 
             // Clean up data
             $this->name = htmlspecialchars(strip_tags($this->name));;
-            $this->created_at = htmlspecialchars(strip_tags($this->created_at));
 
             // Bind data
             $stmt->bindParam(':name', $this->name);
-            $stmt->bindParam(':created_at', $this->created_at);
 
             // Run query
             if ($stmt->execute()) {
