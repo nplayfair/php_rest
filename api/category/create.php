@@ -21,7 +21,6 @@
     $data = json_decode(file_get_contents("php://input"));
 
     $category->name = $data->name;
-    $category->created_at = $data->body;
 
     // Create post
     if ($category->create()) {
